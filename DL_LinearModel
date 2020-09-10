@@ -1,0 +1,31 @@
+# standard weight along to height
+import torch
+import numpy as np
+import matplotlib.pyplot as plt
+
+x_data = [156,160,166,170,178]
+y_data = [55.9,58.6,62.8,65.8,72.1]
+
+plt.plot(x_data, y_data)
+plt.xlabel('height')
+plt.ylabel('weight')
+plt.show()
+
+w=1.0
+def forward(x):
+  return x*w
+
+def loss(x,y):
+  y_predict = forward(x)
+  return (y_predict - y) * (y_predict - y)
+
+for w in np.arange(0.0, 2.0, 0.5):
+  print("w=", w)
+  loss_sum = 0
+  for x_val, y_val in zip(x_data, y_data):
+    y_predict_val = forward(x_val)
+    l = loss(x_val, y_val)
+    loss_sum += 1
+    print("\t", x_val, y_val, y_predict_val,l)
+
+  print("MSE = ", loss_sum / 3)
